@@ -67,7 +67,7 @@ angular.module('chessApp')
     		return '\u2654';
     	}
     	if ($scope.board[i][j] == 'WhitePawn') {
-    		return '\u265c';
+    		return '\u2659';
     	}
     }
 
