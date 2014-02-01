@@ -90,5 +90,15 @@ body {
 }
 
 .board .selected {
-  background-color: yellow;
+  background-color: yellow !important;
 }
+
+.board tr:nth-child(2n) td:nth-child(2n+1) {
+  background-color: gray;
+}
+
+.board tr:nth-child(2n+1) td:nth-child(2n) {
+  background-color: gray;
+}
+
+

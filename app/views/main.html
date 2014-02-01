@@ -1,8 +1,6 @@
 <table class="board">
     <tr ng-repeat="i in [0,1,2,3,4,5,6,7]">
         <td ng-repeat="j in [0,1,2,3,4,5,6,7]" ng-click="handleClick(i, j)" ng-class="boardCellClass(i, j)">
-            {{ i }} x {{ j }}
-            <br>
             {{ board[i][j] }}
         </td>
     </tr>
