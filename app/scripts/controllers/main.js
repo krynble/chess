@@ -12,4 +12,9 @@ angular.module('chessApp')
     	[ 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn' ],
     	[ 'WhiteRook', 'WhiteKnight', 'WhiteBishop', 'WhiteQueen', 'WhiteKing', 'WhiteBishop', 'WhiteKnight', 'WhiteRook' ],
     ];
+
+    $scope.handleClick = function(i,j) {
+    	console.log(i,j);
+    }
+
   });
