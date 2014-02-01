@@ -87,6 +87,7 @@ body {
   height: 60px;
   width: 60px;
   text-align: center;
+  font-size: 40px;
 }
 
 .board .selected {

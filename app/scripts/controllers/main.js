@@ -32,4 +32,43 @@ angular.module('chessApp')
     	}
     }
 
+    $scope.pieceAtPosition = function(i,j) {
+    	if ($scope.board[i][j] == 'BlackRook') {
+    		return '\u265c';
+    	}
+    	if ($scope.board[i][j] == 'BlackKnight') {
+    		return '\u265e';
+    	}
+    	if ($scope.board[i][j] == 'BlackBishop') {
+    		return '\u265d';
+    	}
+    	if ($scope.board[i][j] == 'BlackQueen') {
+    		return '\u265b';
+    	}
+    	if ($scope.board[i][j] == 'BlackKing') {
+    		return '\u265a';
+    	}
+    	if ($scope.board[i][j] == 'BlackPawn') {
+    		return '\u265f';
+    	}
+    	if ($scope.board[i][j] == 'WhiteRook') {
+    		return '\u2656';
+    	}
+    	if ($scope.board[i][j] == 'WhiteKnight') {
+    		return '\u2658';
+    	}
+    	if ($scope.board[i][j] == 'WhiteBishop') {
+    		return '\u2657';
+    	}
+    	if ($scope.board[i][j] == 'WhiteQueen') {
+    		return '\u2655';
+    	}
+    	if ($scope.board[i][j] == 'WhiteKing') {
+    		return '\u2654';
+    	}
+    	if ($scope.board[i][j] == 'WhitePawn') {
+    		return '\u265c';
+    	}
+    }
+
   });
