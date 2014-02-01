@@ -21,6 +21,16 @@ angular.module('chessApp')
     		// If we have a piece here, set this cell as selected
     		$scope.selectedCell = [i,j];
     	}
+    	else {
+    		if( $scope.selectedCell[0] >= 0 && $scope.selectedCell[1] >= 0 ) {
+    			// We have a cell selected and we're pointing toward an empty cell!
+    			// This means ... A MOVEMENT!
+    			var piece = $scope.board[ $scope.selectedCell[0] ][ $scope.selectedCell[1] ];
+    			$scope.board[ $scope.selectedCell[0] ][ $scope.selectedCell[1] ] = $scope.board[i][j];
+    			$scope.board[i][j] = piece;
+    			$scope.selectedCell = [ -1, -1 ];
+    		}
+    	}
     }
 
     $scope.boardCellClass = function(i,j) {
