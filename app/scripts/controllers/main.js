@@ -13,8 +13,23 @@ angular.module('chessApp')
     	[ 'WhiteRook', 'WhiteKnight', 'WhiteBishop', 'WhiteQueen', 'WhiteKing', 'WhiteBishop', 'WhiteKnight', 'WhiteRook' ],
     ];
 
+    $scope.selectedCell = [-1,-1];
+
     $scope.handleClick = function(i,j) {
-    	console.log(i,j);
+    	
+    	if ($scope.board[i][j]) {
+    		// If we have a piece here, set this cell as selected
+    		$scope.selectedCell = [i,j];
+    	}
+    }
+
+    $scope.boardCellClass = function(i,j) {
+    	if ( i == $scope.selectedCell[0] && j == $scope.selectedCell[1]) {
+    		return 'selected';
+    	}
+    	else {
+    		return '';
+    	}
     }
 
   });
