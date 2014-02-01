@@ -2,6 +2,9 @@
 
 angular.module('chessApp')
   .controller('MainCtrl', function ($scope) {
+
+  	$scope.currentPlayer = 'White';
+
     $scope.board = [
     	[ 'BlackRook', 'BlackKnight', 'BlackBishop', 'BlackQueen', 'BlackKing', 'BlackBishop', 'BlackKnight', 'BlackRook' ],
     	[ 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn' ],
@@ -18,8 +21,15 @@ angular.module('chessApp')
     $scope.handleClick = function(i,j) {
     	
     	if ($scope.board[i][j]) {
-    		// If we have a piece here, set this cell as selected
-    		$scope.selectedCell = [i,j];
+
+    		if ($scope.board[i][j].indexOf($scope.currentPlayer) === -1) {
+    			$scope.errorMessage = "Now is " + $scope.currentPlayer + "'s turn";
+    		}
+    		else {
+    			$scope.errorMessage = '';
+    			$scope.selectedCell = [i,j];
+    		}
+
     	}
     	else {
     		if( $scope.selectedCell[0] >= 0 && $scope.selectedCell[1] >= 0 ) {
@@ -29,6 +39,7 @@ angular.module('chessApp')
     			$scope.board[ $scope.selectedCell[0] ][ $scope.selectedCell[1] ] = $scope.board[i][j];
     			$scope.board[i][j] = piece;
     			$scope.selectedCell = [ -1, -1 ];
+    			$scope.currentPlayer = ($scope.currentPlayer == 'White' ? 'Black' : 'White');
     		}
     	}
     }
