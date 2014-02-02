@@ -23,7 +23,7 @@ angular.module('chessApp')
     	if ($scope.board[i][j]) {
 
     		if ($scope.board[i][j].indexOf($scope.currentPlayer) === -1) {
-    			$scope.errorMessage = "Now is " + $scope.currentPlayer + "'s turn";
+    			$scope.errorMessage = "Now is " + $scope.currentPlayer + " player's turn";
     		}
     		else {
     			$scope.errorMessage = '';
