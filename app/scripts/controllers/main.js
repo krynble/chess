@@ -8,6 +8,16 @@ angular.module('chessApp')
   	},
   	cellIsOccupied = function(i, j) {
   		return $scope.board[i][j] !== '';
+  	}, moveSelectedPieceTo = function ( i, j ) {
+		var piece = $scope.board[ $scope.selectedCell[0] ][ $scope.selectedCell[1] ];
+		$scope.board[ $scope.selectedCell[0] ][ $scope.selectedCell[1] ] = $scope.board[i][j];
+		$scope.board[i][j] = piece;
+		$scope.selectedCell = [ -1, -1 ];
+  	}, pieceBelongsToEnemy = function(i, j) {
+  		return $scope.board[i][j].indexOf($scope.currentPlayer) === -1;
+  	},
+  	endCurrentPlayersTurn = function() {
+    	$scope.currentPlayer = ($scope.currentPlayer == 'White' ? 'Black' : 'White');
   	}
 
   	$scope.currentPlayer = 'White';
@@ -26,8 +36,29 @@ angular.module('chessApp')
     $scope.selectedCell = [-1,-1];
 
     $scope.handleClick = function(i,j) {
-    	
-    	if (cellIsOccupied(i, j)) {
+
+    	if ( alreadySelectedACell() ) {
+    		/* means we need to check if destination is empty (movement) or occupied (capture) */
+
+    		if ( cellIsOccupied(i, j) ) {
+    			if ( pieceBelongsToEnemy(i, j) ) {
+    				/* conquer */
+    				$scope.board[i][j] = '';
+    				moveSelectedPieceTo ( i, j );
+    				endCurrentPlayersTurn();
+    			}
+    			else {
+    				$scope.selectedCell = [i,j];
+    			}
+    		}
+    		else {
+    			/* movement */
+    			moveSelectedPieceTo ( i, j );
+    			endCurrentPlayersTurn();
+    		}
+
+    	}
+    	else if (cellIsOccupied(i, j)) {
     		// Check if the piece in the selected cell corresponds to the current player
     		if ($scope.board[i][j].indexOf($scope.currentPlayer) === -1) {
     			$scope.errorMessage = "Now is " + $scope.currentPlayer + " player's turn";
@@ -37,17 +68,6 @@ angular.module('chessApp')
     			$scope.selectedCell = [i,j];
     		}
 
-    	}
-    	else {
-    		if( alreadySelectedACell() ) {
-    			// We have a cell selected and we're pointing toward an empty cell!
-    			// This means ... A MOVEMENT!
-    			var piece = $scope.board[ $scope.selectedCell[0] ][ $scope.selectedCell[1] ];
-    			$scope.board[ $scope.selectedCell[0] ][ $scope.selectedCell[1] ] = $scope.board[i][j];
-    			$scope.board[i][j] = piece;
-    			$scope.selectedCell = [ -1, -1 ];
-    			$scope.currentPlayer = ($scope.currentPlayer == 'White' ? 'Black' : 'White');
-    		}
     	}
     }
 
