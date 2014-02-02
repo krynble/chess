@@ -18,6 +18,36 @@ angular.module('chessApp')
   	},
   	endCurrentPlayersTurn = function() {
     	$scope.currentPlayer = ($scope.currentPlayer == 'White' ? 'Black' : 'White');
+  	}, movementIsValid = function ( from, to ) {
+  		var piece = $scope.board[from[0]][from[1]],
+  			diff_y = Math.abs(from[0] - to[0]),
+  			diff_x = Math.abs(from[1] - to[1]);
+
+  		if (piece == "BlackRook" || piece == "WhiteRook") {
+  			return ((diff_y == 0 || diff_x == 0) && (diff_y > 0 || diff_x > 0));
+  		}
+  		else if (piece == "BlackKnight" || piece == "WhiteKnight") {
+  			return ((diff_y == 2 && diff_x == 1) || (diff_y == 1 && diff_x == 2));
+  		}
+  		else if (piece == "BlackBishop" || piece == "WhiteBishop") {
+  			return diff_y > 0 && diff_y == diff_x;
+  		}
+  		else if (piece == "BlackQueen" || piece == "WhiteQueen") {
+  			// return true - he he just kidding
+  			return ((diff_y > 0 && diff_y == diff_x) || ((diff_y == 0 || diff_x == 0) && (diff_y > 0 || diff_x > 0)));
+  		}
+  		else if (piece == "BlackKing" || piece == "WhiteKing") {
+  			return ((diff_y > 0 || diff_x > 0) && (diff_y <= 1 && diff_x <= 1));
+  		}
+  		else if (piece == "BlackPawn" || piece == "WhitePawn") {
+  			return (diff_y == 1 && diff_x == 0);
+  		}
+  		else {
+  			alert(piece);
+  		}
+
+
+
   	}
 
   	$scope.currentPlayer = 'White';
@@ -42,19 +72,30 @@ angular.module('chessApp')
 
     		if ( cellIsOccupied(i, j) ) {
     			if ( pieceBelongsToEnemy(i, j) ) {
-    				/* conquer */
-    				$scope.board[i][j] = '';
-    				moveSelectedPieceTo ( i, j );
-    				endCurrentPlayersTurn();
+    				if (movementIsValid( $scope.selectedCell, [i, j] ) ) {
+    					/* conquer */
+	    				$scope.board[i][j] = '';
+	    				moveSelectedPieceTo ( i, j );
+	    				endCurrentPlayersTurn();
+    				}
+    				else {
+    					$scope.errorMessage = "Invalid movement";
+    				}
+    				
     			}
     			else {
     				$scope.selectedCell = [i,j];
     			}
     		}
     		else {
-    			/* movement */
-    			moveSelectedPieceTo ( i, j );
-    			endCurrentPlayersTurn();
+    			if (movementIsValid($scope.selectedCell, [i, j])) {
+	    			/* movement */
+	    			moveSelectedPieceTo ( i, j );
+	    			endCurrentPlayersTurn();
+    			}
+				else {
+					$scope.errorMessage = "Invalid movement";
+				}
     		}
 
     	}
