@@ -3,6 +3,13 @@
 angular.module('chessApp')
   .controller('MainCtrl', function ($scope) {
 
+  	var alreadySelectedACell = function() {
+  		return $scope.selectedCell[0] >= 0 && $scope.selectedCell[1] >= 0;
+  	},
+  	cellIsOccupied = function(i, j) {
+  		return $scope.board[i][j] !== '';
+  	}
+
   	$scope.currentPlayer = 'White';
 
     $scope.board = [
@@ -20,19 +27,19 @@ angular.module('chessApp')
 
     $scope.handleClick = function(i,j) {
     	
-    	if ($scope.board[i][j]) {
-
+    	if (cellIsOccupied(i, j)) {
+    		// Check if the piece in the selected cell corresponds to the current player
     		if ($scope.board[i][j].indexOf($scope.currentPlayer) === -1) {
     			$scope.errorMessage = "Now is " + $scope.currentPlayer + " player's turn";
     		}
     		else {
-    			$scope.errorMessage = '';
+				$scope.errorMessage = '';
     			$scope.selectedCell = [i,j];
     		}
 
     	}
     	else {
-    		if( $scope.selectedCell[0] >= 0 && $scope.selectedCell[1] >= 0 ) {
+    		if( alreadySelectedACell() ) {
     			// We have a cell selected and we're pointing toward an empty cell!
     			// This means ... A MOVEMENT!
     			var piece = $scope.board[ $scope.selectedCell[0] ][ $scope.selectedCell[1] ];
