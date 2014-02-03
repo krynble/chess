@@ -40,7 +40,13 @@ angular.module('chessApp')
   			return ((diff_y > 0 || diff_x > 0) && (diff_y <= 1 && diff_x <= 1));
   		}
   		else if (piece == "BlackPawn" || piece == "WhitePawn") {
-  			return (diff_y == 1 && diff_x == 0);
+  			if ( cellIsOccupied(to[0], to[1]) ) {
+  				return (diff_y == 1 && diff_x == 1);
+  			}
+  			else {
+  				return (diff_y == 1 && diff_x == 0);
+  			}
+  			
   		}
   		else {
   			alert(piece);
@@ -73,6 +79,7 @@ angular.module('chessApp')
     		if ( cellIsOccupied(i, j) ) {
     			if ( pieceBelongsToEnemy(i, j) ) {
     				if (movementIsValid( $scope.selectedCell, [i, j] ) ) {
+    					$scope.errorMessage = "";
     					/* conquer */
 	    				$scope.board[i][j] = '';
 	    				moveSelectedPieceTo ( i, j );
@@ -92,6 +99,7 @@ angular.module('chessApp')
 	    			/* movement */
 	    			moveSelectedPieceTo ( i, j );
 	    			endCurrentPlayersTurn();
+	    			$scope.errorMessage = '';
     			}
 				else {
 					$scope.errorMessage = "Invalid movement";
