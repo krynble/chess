@@ -39,7 +39,12 @@ angular.module('chessApp')
   		else if (piece == "BlackKing" || piece == "WhiteKing") {
   			return ((diff_y > 0 || diff_x > 0) && (diff_y <= 1 && diff_x <= 1));
   		}
-  		else if (piece == "BlackPawn" || piece == "WhitePawn") {
+  		else if (piece == "WhitePawn") {
+
+  			if (from[0] - to[0] != 1) {
+  				return false;
+  			}
+
   			if ( cellIsOccupied(to[0], to[1]) ) {
   				return (diff_y == 1 && diff_x == 1);
   			}
@@ -47,6 +52,20 @@ angular.module('chessApp')
   				return (diff_y == 1 && diff_x == 0);
   			}
   			
+  		}
+  		else if (piece == "BlackPawn") {
+
+  			if (from[0] - to[0] != -1) {
+  				return false;
+  			}
+
+  			if ( cellIsOccupied(to[0], to[1]) ) {
+  				return (diff_y == 1 && diff_x == 1);
+  			}
+  			else {
+  				return (diff_y == 1 && diff_x == 0);
+  			}
+
   		}
   		else {
   			alert(piece);
